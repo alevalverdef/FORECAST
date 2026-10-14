@@ -59,8 +59,13 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   hace 5: 0.70%, hace 6: 1.53%, hace 7: 0.70%. Hace 3 y hace 6 ≈ mismo día de la semana 1 y 2
   semanas antes. Se creó "Repetición por rezago" (tasa por rezago con encogimiento Beta hacia 1%):
   backtest +0.004 bits, top1 2.8%, top5 7.7%, top10 12.6% (p=0.35, no significativo).
-- Regla: usar "Repetición por rezago (a=300)" como modelo principal.
-- **Pronóstico CORREGIDO Chances viernes 16/10/2026: 1) 61, 2) 80, 3) 47** (84 bajó a 0.78%).
+- MÉTODO FIJO (explicado al usuario): registrar → evaluar (walk-forward 216 sorteos, 34 modelos)
+  → pronosticar con el consenso de los 2 mejores (`--modelos 2 --top 3`). La bitácora
+  `data/bitacora.csv` guarda cada top 3 entregado; `registrar` muestra el marcador acumulado.
+  El usuario NO quiere propuestas: Claude decide y entrega.
+- Ranking actual: 1) Repetición reciente, 2) Repetición por rezago (top 3 en backtest 6.1% y
+  5.6% vs 3% azar). Frecuencia histórica (usada el 13/10) solo 3.1%.
+- **Pronóstico FINAL Chances viernes 16/10/2026: 1) 61, 2) 47, 3) 80.**
 - Esperando el resultado del viernes 16/10 (sale ~8 p. m.). Luego registrar y pronosticar el
   domingo 18/10 (Lotería Nacional).
 - Ya se puede subir a GitHub: rama `claude/lottery-prediction-model-wh4avp`. Los archivos se
