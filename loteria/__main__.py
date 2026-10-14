@@ -119,6 +119,42 @@ def cmd_pronosticar(a):
     out["consenso"] = cons
     out.sort_values("consenso", ascending=False).to_csv(
         RES / f"pronostico_{ctx.fecha[0]:%Y%m%d}.csv", index=False)
+    _bitacora_guardar(ctx, nombres, top, cons)
+
+
+BITACORA = Path("data/bitacora.csv")
+
+
+def _bitacora_guardar(ctx, nombres, top, cons):
+    """Registro permanente de cada pronóstico entregado, para medir el desempeño real."""
+    fila = {"fecha": f"{ctx.fecha[0]:%d/%m/%Y}", "sorteo": ctx.sorteo[0], "modelos": " + ".join(nombres),
+            "top": " ".join(f"{n:02d}" for n in top), "prob_top_%": round(100 * cons[top].sum(), 2),
+            "probs": " ".join(f"{x:.5f}" for x in cons), "real": ""}
+    b = pd.read_csv(BITACORA, dtype=str) if BITACORA.exists() else pd.DataFrame(columns=list(fila))
+    b = b[b["fecha"] != fila["fecha"]]
+    pd.concat([b, pd.DataFrame([fila])], ignore_index=True).to_csv(BITACORA, index=False)
+
+
+def _bitacora_cerrar(fecha, numero):
+    """Anota el real y muestra el marcador acumulado de los pronósticos entregados."""
+    if not BITACORA.exists():
+        return
+    b = pd.read_csv(BITACORA, dtype=str).fillna("")
+    b.loc[b["fecha"] == f"{fecha:%d/%m/%Y}", "real"] = f"{numero:02d}"
+    b.to_csv(BITACORA, index=False)
+    c = b[b["real"] != ""]
+    if c.empty:
+        return
+    real = c["real"].astype(int).to_numpy()
+    tops = [list(map(int, t.split())) for t in c["top"]]
+    probs = np.array([list(map(float, p.split())) for p in c["probs"]])
+    acierto = np.array([r in t for r, t in zip(real, tops)])
+    cerca = np.array([min(abs(r - x) for x in t) <= 3 for r, t in zip(real, tops)])
+    bits = np.log2(probs[np.arange(len(real)), real] * N_NUMEROS)
+    k = len(tops[0])
+    print(f"\nMarcador de pronósticos entregados ({len(c)}): acierto en top {k}: {acierto.sum()} "
+          f"({100 * acierto.mean():.1f}% vs {k}% azar) | a ±3: {100 * cerca.mean():.1f}% (azar ~{7 * k}%) "
+          f"| ganancia promedio vs azar: {bits.mean():+.3f} bits")
 
 
 def cmd_registrar(a):
@@ -147,6 +183,7 @@ def cmd_registrar(a):
             nueva[cols[k]] = v
     crudo = pd.concat([crudo, pd.DataFrame([nueva])], ignore_index=True)
     crudo.to_csv(ruta, index=False)
+    _bitacora_cerrar(ctx.fecha[0], a.numero)
     print(f"\nResultado agregado a {ruta}. Ejecute 'evaluar' para recalcular el ranking de modelos.")
 
 
