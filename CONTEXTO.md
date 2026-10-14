@@ -49,7 +49,10 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   el azar. El 47 había salido 3 veces en 722 (esperado 7.2): de los más "fríos". Reglas que lo
   "explicaban": anterior + 63, día del mes + 34, día del año + 61 (todas ~1% histórico).
 - Se re-corrió `evaluar` con el dato nuevo: ranking prácticamente igual; no se recalibró nada.
-- **Pronóstico entregado para Chances viernes 16/10/2026: 1) 44, 2) 73, 3) 60.**
+- Al usuario le molestó recibir el mismo top 3 dos veces (el modelo de frecuencia casi no cambia).
+  Desde ahora se usa el CONSENSO de los 5 mejores modelos (`--modelos 5 --top 3`), que sí
+  reacciona a los sorteos recientes y a la fecha. Ninguno está probado mejor que el azar.
+- **Pronóstico entregado para Chances viernes 16/10/2026: 1) 73, 2) 09, 3) 84** (consenso).
 - Esperando el resultado del viernes 16/10 (sale ~8 p. m.). Luego registrar y pronosticar el
   domingo 18/10 (Lotería Nacional).
 - Ya se puede subir a GitHub: rama `claude/lottery-prediction-model-wh4avp`. Los archivos se
