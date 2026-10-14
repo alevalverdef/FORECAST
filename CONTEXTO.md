@@ -27,7 +27,7 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   "28 Aug, 2026"), validadas contra el día de la semana: sin errores.
 - Sorteos en días especiales (lunes 02/02/2026, algunos sábados, un miércoles): se conservan.
 - Hueco: no hay Chances entre 11/04/2025 y 29/08/2025.
-- Último resultado registrado: **domingo 11/10/2026 → 84** (Lotería Nacional).
+- Último resultado registrado: **martes 13/10/2026 → 47** (Chances). 723 sorteos.
 
 ## Hallazgos (ya comunicados al usuario)
 - Pruebas de aleatoriedad (`analizar`): ninguna variable (día, mes, quincena, año, tipo de
@@ -43,15 +43,17 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   histórico.
 
 ## Estado actual / pendientes
-- **Pronóstico entregado para Chances martes 13/10/2026: 1) 44, 2) 73, 3) 60**
-  (modelo Frecuencia histórica a=20).
-- Esperando del usuario el **resultado real del martes 13/10**. Al recibirlo:
-  `python -m loteria registrar --fecha 13/10/2026 --numero NN --sorteo Chances`,
-  luego dar el top 3 del **viernes 16/10 (Chances)** con
-  `python -m loteria pronosticar --fecha 16/10/2026 --sorteo Chances --modelos 1 --top 3`.
-  Opcional: volver a correr `evaluar` (~5 min) para actualizar el ranking.
-- La sesión anterior no podía subir cambios a GitHub (rechazo de escritura); por eso se
-  abrió esta. Desarrollar en la rama `claude/lottery-prediction-model-wh4avp`.
+- 13/10 salió **47** (se había pronosticado 44, 73, 60). Post-mortem: solo los modelos de
+  regresión lo tenían arriba (regresión lineal en el puesto 1), pero porque siempre favorecen
+  números cercanos al promedio (~47–51); en el backtest aciertan el top 10 solo 5–6%, peor que
+  el azar. El 47 había salido 3 veces en 722 (esperado 7.2): de los más "fríos". Reglas que lo
+  "explicaban": anterior + 63, día del mes + 34, día del año + 61 (todas ~1% histórico).
+- Se re-corrió `evaluar` con el dato nuevo: ranking prácticamente igual; no se recalibró nada.
+- **Pronóstico entregado para Chances viernes 16/10/2026: 1) 44, 2) 73, 3) 60.**
+- Esperando el resultado del viernes 16/10 (sale ~8 p. m.). Luego registrar y pronosticar el
+  domingo 18/10 (Lotería Nacional).
+- Ya se puede subir a GitHub: rama `claude/lottery-prediction-model-wh4avp`. Los archivos se
+  reacomodaron a `loteria/` y `data/` (se habían subido sueltos en la raíz).
 
 ## Notas técnicas
 - Instalar dependencias: `pip install --break-system-packages -r requirements.txt`. Si
