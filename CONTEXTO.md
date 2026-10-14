@@ -54,8 +54,13 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   k y w por máxima verosimilitud; hoy k=3, w=0.5) y "Mezcla experta" (stacking con pesos EM).
   Backtest 216 sorteos: Repetición reciente quedó 1.º (+0.007 bits, top1 2.0%, top5 8.0%,
   top10 12.8%; p=0.15, no significativo tras Holm). Mezcla experta 3.º.
-- Regla: pronosticar con los 2 mejores del ranking (`--modelos 2 --top 3`) y dar el consenso.
-- **Pronóstico entregado para Chances viernes 16/10/2026: 1) 84, 2) 61, 3) 47** (≈1.42% c/u).
+- El usuario objetó (con razón) poner el 84 —salió hace 2 sorteos—. Datos por rezago exacto:
+  repetir el de hace 1: 1.39%, hace 2: 0.69%, hace 3: 2.08% (p=0.01 sin corregir), hace 4: 0.97%,
+  hace 5: 0.70%, hace 6: 1.53%, hace 7: 0.70%. Hace 3 y hace 6 ≈ mismo día de la semana 1 y 2
+  semanas antes. Se creó "Repetición por rezago" (tasa por rezago con encogimiento Beta hacia 1%):
+  backtest +0.004 bits, top1 2.8%, top5 7.7%, top10 12.6% (p=0.35, no significativo).
+- Regla: usar "Repetición por rezago (a=300)" como modelo principal.
+- **Pronóstico CORREGIDO Chances viernes 16/10/2026: 1) 61, 2) 80, 3) 47** (84 bajó a 0.78%).
 - Esperando el resultado del viernes 16/10 (sale ~8 p. m.). Luego registrar y pronosticar el
   domingo 18/10 (Lotería Nacional).
 - Ya se puede subir a GitHub: rama `claude/lottery-prediction-model-wh4avp`. Los archivos se

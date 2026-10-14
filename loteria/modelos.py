@@ -361,6 +361,32 @@ class Repeticion:
         return np.tile(p / p.sum(), (len(ctx), 1))
 
 
+class RepeticionPorRezago:
+    """Probabilidad de repetir el número de hace L sorteos, estimada por separado para cada
+    rezago L=1..kmax con encogimiento bayesiano (Beta) hacia el 1% del azar. Así un rezago
+    donde casi no hay repeticiones (p. ej. L=2) no recibe peso extra."""
+
+    familia = "secuencial"
+
+    def __init__(self, kmax: int = 7, fuerza: float = 300.0):
+        self.kmax, self.a = kmax, fuerza
+        self.nombre = f"Repetición por rezago (L=1..{kmax}, encogimiento a={fuerza:g})"
+
+    def fit(self, hist):
+        x = hist["numero"].to_numpy()
+        self.q = np.array([((x[L:] == x[:-L]).sum() + self.a / K) / (len(x) - L + self.a)
+                           for L in range(1, self.kmax + 1)])
+        self.ult = x[::-1][: self.kmax]
+        return self
+
+    def predict_proba(self, ctx):
+        # razón de verosimilitud por rezago respecto al azar, combinada multiplicativamente
+        p = np.ones(K)
+        for L, num in enumerate(self.ult):
+            p[num] *= self.q[L] * K
+        return np.tile(p / p.sum(), (len(ctx), 1))
+
+
 class MezclaExperta:
     """Stacking bayesiano: mezcla lineal de pronósticos con pesos que maximizan el log-score
     fuera de muestra de los últimos `ventana` sorteos (EM). Incluye el uniforme, así que si
@@ -372,7 +398,7 @@ class MezclaExperta:
     def __init__(self, ventana: int = 150):
         self.ventana = ventana
         self.componentes = [Uniforme(), FrecuenciaGlobal(20.0), FrecuenciaReciente(30),
-                            FrecuenciaReciente(150), Repeticion(), Markov(20.0),
+                            FrecuenciaReciente(150), Repeticion(), RepeticionPorRezago(), Markov(20.0),
                             Condicional(("mes", "dia_mes"), 30.0), Condicional(("dia_semana",))]
         self.miembros = self.componentes
 
@@ -424,6 +450,7 @@ def catalogo(rapido: bool = False) -> list:
         Atrasados(1.0),
         Markov(20.0),
         Repeticion(),
+        RepeticionPorRezago(),
         MezclaExperta(),
         Condicional(("dia_semana",)),
         Condicional(("mes",)),
