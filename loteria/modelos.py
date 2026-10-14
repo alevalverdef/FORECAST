@@ -326,6 +326,84 @@ class Ensamble:
         return _normalizar(np.exp(lp - lp.max(1, keepdims=True)))
 
 
+class Repeticion:
+    """Repetición reciente: p(x) ∝ 1 + w·[x salió en los últimos k sorteos].
+    k y w se estiman por máxima verosimilitud con la historia disponible (sin mirar el futuro);
+    si no hay efecto, w → 0 y el modelo se vuelve uniforme."""
+
+    familia = "secuencial"
+    nombre = "Repetición reciente (k y peso estimados por MV)"
+    PESOS = np.array([0.0, 0.1, 0.25, 0.5, 0.75, 1.0, 1.5, 2.0, 3.0])
+
+    def fit(self, hist):
+        x = hist["numero"].to_numpy()
+        n, kmax = len(x), 10
+        y = x[kmax:]
+        hits = np.zeros(len(y), bool)
+        vistos = np.zeros((len(y), K), bool)
+        mejor = (-np.inf, 1, 0.0)
+        for k in range(1, kmax + 1):
+            prev = x[kmax - k:n - k]
+            hits |= prev == y
+            vistos[np.arange(len(y)), prev] = True
+            m = vistos.sum(1)
+            for w in self.PESOS:
+                ll = np.mean(np.log1p(w * hits) - np.log(K + w * m))
+                if ll > mejor[0]:
+                    mejor = (ll, k, w)
+        _, self.k, self.w = mejor
+        self.recientes = set(x[-self.k:])
+        return self
+
+    def predict_proba(self, ctx):
+        p = np.ones(K)
+        p[list(self.recientes)] += self.w
+        return np.tile(p / p.sum(), (len(ctx), 1))
+
+
+class MezclaExperta:
+    """Stacking bayesiano: mezcla lineal de pronósticos con pesos que maximizan el log-score
+    fuera de muestra de los últimos `ventana` sorteos (EM). Incluye el uniforme, así que si
+    ningún componente aporta, el peso se va al azar y el pronóstico no empeora."""
+
+    familia = "ensamble"
+    nombre = "Mezcla experta (stacking bayesiano con pesos aprendidos)"
+
+    def __init__(self, ventana: int = 150):
+        self.ventana = ventana
+        self.componentes = [Uniforme(), FrecuenciaGlobal(20.0), FrecuenciaReciente(30),
+                            FrecuenciaReciente(150), Repeticion(), Markov(20.0),
+                            Condicional(("mes", "dia_mes"), 30.0), Condicional(("dia_semana",))]
+        self.miembros = self.componentes
+
+    def fit(self, hist):
+        n = len(hist)
+        if getattr(self, "_n", -99) > n - 10 and self._n <= n:  # pesos se re-estiman cada 10 sorteos
+            for m in self.componentes:
+                m.fit(hist)
+            return self
+        self._n = n
+        ini = max(100, n - self.ventana)
+        P = []
+        for t in range(ini, n):
+            h, fila = hist.iloc[:t], hist.iloc[t:t + 1]
+            y = int(hist["numero"].iloc[t])
+            P.append([m.fit(h).predict_proba(fila)[0][y] for m in self.componentes])
+        P = np.array(P)
+        w = np.full(P.shape[1], 1.0 / P.shape[1])
+        for _ in range(300):  # EM para pesos de mezcla
+            r = P * w
+            r /= r.sum(1, keepdims=True)
+            w = r.mean(0)
+        self.pesos = w
+        for m in self.componentes:
+            m.fit(hist)
+        return self
+
+    def predict_proba(self, ctx):
+        return sum(wi * m.predict_proba(ctx) for wi, m in zip(self.pesos, self.componentes))
+
+
 # --------------------------------------------------------------------------- catálogo
 def catalogo(rapido: bool = False) -> list:
     from sklearn.ensemble import (ExtraTreesClassifier, GradientBoostingRegressor,
@@ -345,6 +423,8 @@ def catalogo(rapido: bool = False) -> list:
         Atrasados(0.5),
         Atrasados(1.0),
         Markov(20.0),
+        Repeticion(),
+        MezclaExperta(),
         Condicional(("dia_semana",)),
         Condicional(("mes",)),
         Condicional(("dia_mes",)),
