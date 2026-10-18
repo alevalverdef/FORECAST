@@ -27,7 +27,7 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   "28 Aug, 2026"), validadas contra el día de la semana: sin errores.
 - Sorteos en días especiales (lunes 02/02/2026, algunos sábados, un miércoles): se conservan.
 - Hueco: no hay Chances entre 11/04/2025 y 29/08/2025.
-- Último resultado registrado: **martes 13/10/2026 → 47** (Chances). 723 sorteos.
+- Último resultado registrado: **viernes 16/10/2026 → 57** (Chances). 724 sorteos.
 
 ## Hallazgos (ya comunicados al usuario)
 - Pruebas de aleatoriedad (`analizar`): ninguna variable (día, mes, quincena, año, tipo de
@@ -65,11 +65,15 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   El usuario NO quiere propuestas: Claude decide y entrega.
 - Ranking actual: 1) Repetición reciente, 2) Repetición por rezago (top 3 en backtest 6.1% y
   5.6% vs 3% azar). Frecuencia histórica (usada el 13/10) solo 3.1%.
-- **Pronóstico FINAL Chances viernes 16/10/2026: 1) 61, 2) 47, 3) 80.**
-- Esperando el resultado del viernes 16/10 (sale ~8 p. m.). Luego registrar y pronosticar el
-  domingo 18/10 (Lotería Nacional).
-- Ya se puede subir a GitHub: rama `claude/lottery-prediction-model-wh4avp`. Los archivos se
-  reacomodaron a `loteria/` y `data/` (se habían subido sueltos en la raíz).
+- 16/10: pronóstico 61, 47, 80 → salió **57** (fallo). Marcador bitácora: 0 de 2 en top 3.
+  Post-mortem: solo "Números atrasados" lo tenía alto (puesto 4, 3.6%); el 57 llevaba 371 sorteos
+  sin salir. Pero en 574 sorteos, el ganador está en el 5% más atrasado solo 3.1% de las veces
+  (azar 5%): el atraso NO predice; 47 y 57 seguidos fue coincidencia. Atrasados sigue en el
+  puesto 16 y 31 del ranking (top10 7.4% vs 10%). No se ajustó hacia esa regla.
+- Recalibración (evaluar con 724 sorteos): mismo top 2 (repetición reciente y por rezago).
+- **Pronóstico Lotería Nacional domingo 18/10/2026: 1) 84, 2) 57, 3) 97** (84 y 97 = los
+  dos domingos anteriores, rezagos 3 y 6; 57 = el último).
+- Siguiente: registrar resultado del 18/10 y pronosticar martes 20/10 (Chances).
 
 ## Notas técnicas
 - Instalar dependencias: `pip install --break-system-packages -r requirements.txt`. Si
