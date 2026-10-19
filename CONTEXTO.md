@@ -27,7 +27,7 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   "28 Aug, 2026"), validadas contra el día de la semana: sin errores.
 - Sorteos en días especiales (lunes 02/02/2026, algunos sábados, un miércoles): se conservan.
 - Hueco: no hay Chances entre 11/04/2025 y 29/08/2025.
-- Último resultado registrado: **viernes 16/10/2026 → 57** (Chances). 724 sorteos.
+- Último resultado registrado: **domingo 18/10/2026 → 75** (Lotería Nacional). 725 sorteos.
 
 ## Hallazgos (ya comunicados al usuario)
 - Pruebas de aleatoriedad (`analizar`): ninguna variable (día, mes, quincena, año, tipo de
@@ -73,7 +73,18 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
 - Recalibración (evaluar con 724 sorteos): mismo top 2 (repetición reciente y por rezago).
 - **Pronóstico Lotería Nacional domingo 18/10/2026: 1) 84, 2) 57, 3) 97** (84 y 97 = los
   dos domingos anteriores, rezagos 3 y 6; 57 = el último).
-- Siguiente: registrar resultado del 18/10 y pronosticar martes 20/10 (Chances).
+- 18/10: pronóstico 84, 57, 97 → salió **75**. Marcador bitácora: 0 de 3 (con 3% por sorteo,
+  0 de 3 pasa el 91% de las veces). 47, 57 y 75 seguidos estaban entre los que MENOS han salido.
+- Calibración nueva: "Sistema adaptativo" (promedio bayesiano de 11 modelos con olvido 0.98;
+  el peso de cada modelo se actualiza con cada sorteo). Backtest: 2.º en log-score (+0.004 bits),
+  mejor top 10 de todos (15.2%), top 3 5.5% (últimos 30: 6.7%). Pesos hoy: fríos por conteo 43%,
+  repetición 17%+19%, uniforme 17%. Es el MODELO OFICIAL desde ahora:
+  `python -m loteria pronosticar --fecha DD/MM/AAAA --sorteo X --modelo "Sistema adaptativo" --top 5`
+- ALERTA DE DATOS: el 00 no aparece NI UNA vez en 725 sorteos (esperado 7.3; prob ~0.07%). Se
+  preguntó al usuario si el 00 existe en estos sorteos o si falta en los Excel. Mientras tanto se
+  excluye del top 3.
+- **Pronóstico Chances martes 20/10/2026: 1) 62, 2) 47, 3) 75.**
+- Siguiente: registrar 20/10 y pronosticar viernes 23/10 (Chances).
 
 ## Notas técnicas
 - Instalar dependencias: `pip install --break-system-packages -r requirements.txt`. Si
