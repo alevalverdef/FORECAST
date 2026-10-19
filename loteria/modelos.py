@@ -387,6 +387,61 @@ class RepeticionPorRezago:
         return np.tile(p / p.sum(), (len(ctx), 1))
 
 
+class FriosConteo:
+    """Números 'fríos' por conteo: más probabilidad a los que han salido menos veces en toda la historia."""
+
+    familia = "frecuencia"
+
+    def __init__(self, suavizado: float = 5.0):
+        self.a = suavizado
+        self.nombre = f"Fríos por conteo (a={suavizado:g})"
+
+    def fit(self, hist):
+        c = np.bincount(hist["numero"], minlength=K)
+        self.p = _normalizar(1.0 / (c + self.a))
+        return self
+
+    def predict_proba(self, ctx):
+        return np.tile(self.p, (len(ctx), 1))
+
+
+class SistemaAdaptativo:
+    """Promedio bayesiano de modelos con olvido exponencial (factor lam por sorteo).
+    Tras cada sorteo, el peso de cada modelo se multiplica por la probabilidad que le dio al
+    número que salió, y el historial viejo se va descontando: el sistema pasa peso a lo que está
+    funcionando y lo devuelve al azar si nada funciona. Las predicciones pasadas se guardan en
+    caché para que cada sorteo nuevo solo cueste un paso."""
+
+    familia = "ensamble"
+
+    def __init__(self, lam: float = 0.98, inicio: int = 100):
+        self.lam, self.inicio = lam, inicio
+        self.nombre = f"Sistema adaptativo (promedio bayesiano con olvido {lam:g})"
+        self.componentes = [Uniforme(), FrecuenciaGlobal(20.0), FrecuenciaReciente(30),
+                            FrecuenciaReciente(150), Atrasados(0.5), FriosConteo(5.0), Repeticion(),
+                            RepeticionPorRezago(), Markov(20.0), Condicional(("dia_semana",)),
+                            Condicional(("mes", "dia_mes"), 30.0)]
+        self.miembros = self.componentes
+        self._cache = {}  # (fecha, numero) del sorteo t -> vector de log p de cada componente
+
+    def fit(self, hist):
+        S = np.zeros(len(self.componentes))
+        for t in range(self.inicio, len(hist)):
+            clave = (hist["fecha"].iloc[t], int(hist["numero"].iloc[t]), t)
+            if clave not in self._cache:
+                h, fila, y = hist.iloc[:t], hist.iloc[t:t + 1], int(hist["numero"].iloc[t])
+                self._cache[clave] = np.log([m.fit(h).predict_proba(fila)[0][y] for m in self.componentes])
+            S = self.lam * S + self._cache[clave]
+        w = np.exp(S - S.max())
+        self.pesos = w / w.sum()
+        for m in self.componentes:
+            m.fit(hist)
+        return self
+
+    def predict_proba(self, ctx):
+        return sum(wi * m.predict_proba(ctx) for wi, m in zip(self.pesos, self.componentes))
+
+
 class MezclaExperta:
     """Stacking bayesiano: mezcla lineal de pronósticos con pesos que maximizan el log-score
     fuera de muestra de los últimos `ventana` sorteos (EM). Incluye el uniforme, así que si
@@ -451,6 +506,8 @@ def catalogo(rapido: bool = False) -> list:
         Markov(20.0),
         Repeticion(),
         RepeticionPorRezago(),
+        FriosConteo(5.0),
+        SistemaAdaptativo(0.98),
         MezclaExperta(),
         Condicional(("dia_semana",)),
         Condicional(("mes",)),

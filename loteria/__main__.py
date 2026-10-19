@@ -85,7 +85,9 @@ def cmd_pronosticar(a):
     ev_path = RES / "evaluacion.csv"
     ranking = pd.read_csv(ev_path) if ev_path.exists() else None
     modelos = {m.nombre: m for m in catalogo(rapido=a.rapido)}
-    if ranking is not None:
+    if a.modelo:
+        nombres = [n for n in modelos if a.modelo.lower() in n.lower()][:1]
+    elif ranking is not None:
         nombres = [n for n in ranking["modelo"] if n in modelos and not n.startswith("Uniforme")][: a.modelos]
     else:
         print("[aviso] No hay resultados/evaluacion.csv; ejecute 'evaluar' primero. "
@@ -239,6 +241,7 @@ def main():
     p.add_argument("--sorteo", default=None)
     p.add_argument("--top", type=int, default=10)
     p.add_argument("--modelos", type=int, default=5, help="cuántos de los mejores modelos mostrar")
+    p.add_argument("--modelo", default=None, help="usar un modelo específico (parte del nombre)")
     p.add_argument("--permitir-pendientes", action="store_true",
                    help="pronosticar aunque falten resultados de sorteos intermedios")
     p.set_defaults(f=cmd_pronosticar)
