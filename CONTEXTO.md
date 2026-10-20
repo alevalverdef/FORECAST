@@ -94,7 +94,12 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   en 216 sorteos ese modelo está por debajo del azar. Se descarta el sistema adaptativo como
   oficial. REGLA: el pronóstico usa solo modelos que le ganan al azar en el backtest de 216
   sorteos (hoy: repetición reciente + repetición por rezago, consenso 50/50).
-- **Pronóstico CORREGIDO Chances martes 20/10/2026: 1) 47, 2) 75, 3) 28.**
+- **Pronóstico CORREGIDO Chances martes 20/10/2026: 1) 47, 2) 75, 3) 28.** Claude se mantiene en
+  él (dejó de cambiar de modelo tras cada fallo, que era perseguir ruido).
+- Regresión con TODOS los factores (467 variables del barrido, `python loteria/regresion_total.py`):
+  logística L1 con penalización elegida por validación cruzada y LightGBM, walk-forward 216
+  sorteos, para alto/bajo, par/impar, decena y unidad. Ninguna supera al azar; la L1 elimina
+  todas las variables (alto/bajo exactamente 50%).
 - Siguiente: registrar 20/10 y pronosticar viernes 23/10 (Chances).
 
 ## Notas técnicas
