@@ -405,6 +405,50 @@ class FriosConteo:
         return np.tile(self.p, (len(ctx), 1))
 
 
+class CorrelacionesBarrido:
+    """Usa TODAS las condiciones del barrido de correlaciones (rachas, n.º de sorteo del mes,
+    mes × n.º de sorteo, dígitos de los anteriores, saltos, etc.) para estimar la decena y la
+    unidad (naive Bayes con encogimiento) y las combina en una probabilidad por número."""
+
+    familia = "contextual"
+
+    def __init__(self, fuerza: float = 50.0, temperatura: float = 0.3):
+        self.a, self.tau = fuerza, temperatura
+        self.nombre = f"Correlaciones del barrido completo (a={fuerza:g}, t={temperatura:g})"
+
+    def fit(self, hist):
+        from .correlaciones import condiciones
+
+        self.hist = hist
+        C = condiciones(hist).astype(str)
+        x = hist["numero"].to_numpy()
+        self.tablas = {}
+        for nombre, y in (("dec", x // 10), ("uni", x % 10)):
+            prior = (np.bincount(y, minlength=10) + 1.0) / (len(y) + 10)
+            t = {}
+            for var in C.columns:
+                for nivel, idx in C.groupby(var).indices.items():
+                    c = np.bincount(y[idx], minlength=10)
+                    t[(var, nivel)] = np.log((c + self.a * prior) / (len(idx) + self.a)) - np.log(prior)
+            self.tablas[nombre] = (prior, t)
+        return self
+
+    def predict_proba(self, ctx):
+        from .correlaciones import condiciones
+
+        base = pd.concat([self.hist, ctx.assign(numero=self.hist["numero"].iloc[-1])], ignore_index=True)
+        C = condiciones(base).astype(str).iloc[len(self.hist):]
+        out = []
+        for _, fila in C.iterrows():
+            pr = {}
+            for nombre, (prior, t) in self.tablas.items():
+                lp = np.log(prior) + self.tau * sum(t.get((v, fila[v]), 0.0) for v in C.columns)
+                q = np.exp(lp - lp.max())
+                pr[nombre] = q / q.sum()
+            out.append(np.outer(pr["dec"], pr["uni"]).ravel())
+        return _normalizar(np.array(out))
+
+
 class SistemaAdaptativo:
     """Promedio bayesiano de modelos con olvido exponencial (factor lam por sorteo).
     Tras cada sorteo, el peso de cada modelo se multiplica por la probabilidad que le dio al
@@ -420,7 +464,7 @@ class SistemaAdaptativo:
         self.componentes = [Uniforme(), FrecuenciaGlobal(20.0), FrecuenciaReciente(30),
                             FrecuenciaReciente(150), Atrasados(0.5), FriosConteo(5.0), Repeticion(),
                             RepeticionPorRezago(), Markov(20.0), Condicional(("dia_semana",)),
-                            Condicional(("mes", "dia_mes"), 30.0)]
+                            Condicional(("mes", "dia_mes"), 30.0), CorrelacionesBarrido()]
         self.miembros = self.componentes
         self._cache = {}  # (fecha, numero) del sorteo t -> vector de log p de cada componente
 
@@ -507,6 +551,7 @@ def catalogo(rapido: bool = False) -> list:
         Repeticion(),
         RepeticionPorRezago(),
         FriosConteo(5.0),
+        CorrelacionesBarrido(),
         SistemaAdaptativo(0.98),
         MezclaExperta(),
         Condicional(("dia_semana",)),
