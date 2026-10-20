@@ -80,10 +80,16 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   mejor top 10 de todos (15.2%), top 3 5.5% (últimos 30: 6.7%). Pesos hoy: fríos por conteo 43%,
   repetición 17%+19%, uniforme 17%. Es el MODELO OFICIAL desde ahora:
   `python -m loteria pronosticar --fecha DD/MM/AAAA --sorteo X --modelo "Sistema adaptativo" --top 5`
-- ALERTA DE DATOS: el 00 no aparece NI UNA vez en 725 sorteos (esperado 7.3; prob ~0.07%). Se
-  preguntó al usuario si el 00 existe en estos sorteos o si falta en los Excel. Mientras tanto se
-  excluye del top 3.
-- **Pronóstico Chances martes 20/10/2026: 1) 62, 2) 47, 3) 75.**
+- El usuario confirmó que el 00 (y el 99) existen en estos sorteos. El 00 no ha salido en 725.
+- El usuario pide buscar TODAS las correlaciones posibles. Se creó `loteria/correlaciones.py`:
+  8871 correlaciones (rachas alto/bajo y par/impar, n.º de sorteo del mes, mes × n.º de sorteo,
+  dígitos de los 3 anteriores, saltos, etc.) contra alto/bajo, par/impar, decena, unidad y número.
+  Descubiertas en 2021-24, validadas en 2025-26: 0 sobreviven a pruebas múltiples; de las 300
+  más fuertes solo 22% superan el azar en 2025-26 (promedio −0.79 puntos). Tras 2 bajos
+  seguidos, el siguiente es bajo 46.1% (p=0.35). El 5.º sorteo de agosto nunca repitió número.
+- Modelo "Correlaciones del barrido completo": tenía al 75 en el puesto 2 el 18/10, pero en
+  216 sorteos queda por debajo del azar (top 10 7.4%). Entra al sistema adaptativo, que hoy le da 0%.
+- **Pronóstico Chances martes 20/10/2026: 1) 00, 2) 62, 3) 47.**
 - Siguiente: registrar 20/10 y pronosticar viernes 23/10 (Chances).
 
 ## Notas técnicas
