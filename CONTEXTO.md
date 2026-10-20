@@ -89,7 +89,12 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   seguidos, el siguiente es bajo 46.1% (p=0.35). El 5.º sorteo de agosto nunca repitió número.
 - Modelo "Correlaciones del barrido completo": tenía al 75 en el puesto 2 el 18/10, pero en
   216 sorteos queda por debajo del azar (top 10 7.4%). Entra al sistema adaptativo, que hoy le da 0%.
-- **Pronóstico Chances martes 20/10/2026: 1) 00, 2) 62, 3) 47.**
+- El usuario cuestionó (con razón) poner el 00 "porque nunca ha salido". Error de Claude: el
+  sistema adaptativo le dio 43% de peso a "fríos por conteo" por solo 3 sorteos recientes, aunque
+  en 216 sorteos ese modelo está por debajo del azar. Se descarta el sistema adaptativo como
+  oficial. REGLA: el pronóstico usa solo modelos que le ganan al azar en el backtest de 216
+  sorteos (hoy: repetición reciente + repetición por rezago, consenso 50/50).
+- **Pronóstico CORREGIDO Chances martes 20/10/2026: 1) 47, 2) 75, 3) 28.**
 - Siguiente: registrar 20/10 y pronosticar viernes 23/10 (Chances).
 
 ## Notas técnicas
