@@ -111,6 +111,9 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   específicos tienen solo 5 sorteos previos (9.º sorteo de octubre: 5). Regla "jugar los 3 más
   frecuentes del contexto", validada 2023-26 (≈500 sorteos): entre 1.7% y 4.0% (azar 3%); los
   contextos más específicos son los PEORES (mes×n.º sorteo 2.0%, mes×día×semana 1.7%).
+- Para el 23/10, el modelo que combina TODOS los contextos (Correlaciones del barrido completo)
+  da 73, 33, 75 (2.96%, 2.79%, 2.56%); su historial en 216 sorteos: top 3 3.7%, top 10 7.4%.
+  Se le mostró al usuario como "la respuesta por contextos"; el oficial sigue siendo 57, 85, 61.
 
 ## Notas técnicas
 - Instalar dependencias: `pip install --break-system-packages -r requirements.txt`. Si
