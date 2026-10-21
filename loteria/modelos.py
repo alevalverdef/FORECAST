@@ -563,13 +563,8 @@ def catalogo(rapido: bool = False) -> list:
         Condicional(("mes", "dia_mes"), 30.0),
         NaiveBayesContextual(),
         Digitos(),
-        Regresor("Regresión lineal simple/múltiple", LinearRegression),
-        Regresor("Regresión Poisson", lambda: PoissonRegressor(alpha=1.0, max_iter=300)),
-        Regresor("Random Forest (regresión)",
-                 lambda: RandomForestRegressor(200, min_samples_leaf=20, n_jobs=-1, random_state=0)),
-        Regresor("Gradient Boosting (regresión)",
-                 lambda: GradientBoostingRegressor(n_estimators=150, max_depth=2, learning_rate=0.05,
-                                                   random_state=0)),
+        # Los Regresor (lineal, Poisson, RF y GB de regresión) se retiraron: tratan el número como
+        # cantidad y favorecen los cercanos al centro, cuando todos tienen la misma probabilidad.
         Clasificador("Regresión logística multinomial (L2)",
                      lambda: LogisticRegression(C=0.05, max_iter=500), escalar=True),
         Clasificador("Random Forest (clasificación)",

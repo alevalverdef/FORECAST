@@ -15,6 +15,7 @@ tenga que repetir nada. Léelo completo antes de responder.
 
 - REGLA DEL USUARIO: nunca usar ni mencionar criterios basados en promedios (regresiones que
   favorecen números cercanos a 50). Parte de que todos los números tienen la misma probabilidad.
+  Los 4 modelos de regresión de cantidad se retiraron del catálogo. Ningún pronóstico oficial los usó.
 
 ## Objetivo del proyecto
 Banco de pruebas para pronosticar demanda con alta aleatoriedad y pocas variables, usando
