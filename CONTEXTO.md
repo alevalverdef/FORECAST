@@ -13,6 +13,9 @@ tenga que repetir nada. Léelo completo antes de responder.
   13/10 y viernes 16/10. Regla: **pronosticar un sorteo a la vez**, después de registrar
   el resultado real del anterior (la herramienta ya lo bloquea).
 
+- REGLA DEL USUARIO: nunca usar ni mencionar criterios basados en promedios (regresiones que
+  favorecen números cercanos a 50). Parte de que todos los números tienen la misma probabilidad.
+
 ## Objetivo del proyecto
 Banco de pruebas para pronosticar demanda con alta aleatoriedad y pocas variables, usando
 como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domingo) y Chances
