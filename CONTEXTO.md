@@ -105,6 +105,12 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   Marcador: 0 de 4. Usuario muy molesto. Claude le dijo con claridad que ningún modelo puede
   pronosticar este sorteo y que no va a seguir cambiando de modelo tras cada fallo.
 - Pronóstico viernes 23/10 (mismos 2 modelos validados): 57, 85, 61 (guardado en bitácora).
+- El usuario insiste en frecuencia POR CONTEXTO (p. ej. "3.er sorteo de X mes"). Se mostró para el
+  85 del 20/10 en 12 contextos (mes, día del mes, día semana, sorteo, semana del mes, n.º sorteo del
+  mes, mes×n.º sorteo, mes×día semana, mes×semana, mes×día×semana, mes×sorteo). Contextos
+  específicos tienen solo 5 sorteos previos (9.º sorteo de octubre: 5). Regla "jugar los 3 más
+  frecuentes del contexto", validada 2023-26 (≈500 sorteos): entre 1.7% y 4.0% (azar 3%); los
+  contextos más específicos son los PEORES (mes×n.º sorteo 2.0%, mes×día×semana 1.7%).
 
 ## Notas técnicas
 - Instalar dependencias: `pip install --break-system-packages -r requirements.txt`. Si
