@@ -27,7 +27,8 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   "28 Aug, 2026"), validadas contra el día de la semana: sin errores.
 - Sorteos en días especiales (lunes 02/02/2026, algunos sábados, un miércoles): se conservan.
 - Hueco: no hay Chances entre 11/04/2025 y 29/08/2025.
-- Último resultado registrado: **domingo 18/10/2026 → 75** (Lotería Nacional). 725 sorteos.
+- Último resultado registrado: **martes 20/10/2026 → 85** (Chances, serie 954). 726 sorteos.
+  (La JPS publica 1.º, 2.º y 3.er lugar; el histórico solo tiene el 1.º. 20/10: 85, 38, 64.)
 
 ## Hallazgos (ya comunicados al usuario)
 - Pruebas de aleatoriedad (`analizar`): ninguna variable (día, mes, quincena, año, tipo de
@@ -100,7 +101,10 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   logística L1 con penalización elegida por validación cruzada y LightGBM, walk-forward 216
   sorteos, para alto/bajo, par/impar, decena y unidad. Ninguna supera al azar; la L1 elimina
   todas las variables (alto/bajo exactamente 50%).
-- Siguiente: registrar 20/10 y pronosticar viernes 23/10 (Chances).
+- 20/10: pronóstico 47, 75, 28 → salió **85** (número común: 7 veces antes, justo el promedio).
+  Marcador: 0 de 4. Usuario muy molesto. Claude le dijo con claridad que ningún modelo puede
+  pronosticar este sorteo y que no va a seguir cambiando de modelo tras cada fallo.
+- Pronóstico viernes 23/10 (mismos 2 modelos validados): 57, 85, 61 (guardado en bitácora).
 
 ## Notas técnicas
 - Instalar dependencias: `pip install --break-system-packages -r requirements.txt`. Si
