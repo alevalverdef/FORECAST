@@ -127,7 +127,7 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   con mejor historial en el MISMO TIPO DE SORTEO: +0.0195 bits, top 3 5.4%, p=0.032 (sin corregir
   por las 9 reglas). Chances → Repetición por rezago; Lotería Nacional → Frecuencia histórica a=20
   (la repetición NO funciona en Lotería Nacional: −0.012 bits). NUEVA REGLA OFICIAL.
-- Pronóstico Lotería Nacional domingo 25/10/2026 (corregido con la nueva regla): ver bitácora.
+- Pronóstico Lotería Nacional domingo 25/10/2026 (corregido con la nueva regla): 44, 73, 60.
 
 ## Notas técnicas
 - Instalar dependencias: `pip install --break-system-packages -r requirements.txt`. Si
