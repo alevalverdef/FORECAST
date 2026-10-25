@@ -142,6 +142,14 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   Ajustado para "haber predicho" 2021-24: 5.4% top3 en esos mismos sorteos vs 2.7% en 2025-26.
   Reajustando pesos cada 10 sorteos con resultados reales: 3.6% top3, −0.012 bits. Puesto que dio
   al real en los últimos 6 (ajustado justo antes): 20, 83, 64, 98, 61, 46.
+- Pedido: incluir años anteriores, correlaciones positivas y negativas, seleccionar factores e
+  iterar. `loteria/factores.py`: logit condicional por número con 40 factores (mismo sorteo hace
+  1-3 años: número/decena/unidad; mismo mes/n.º de sorteo/semana/±7 días en años anteriores;
+  frecuencia por contexto; repeticiones hace 1-7; atraso; últimos 30; vecinos, espejo, paridad,
+  decena/número ya salido en el mes...). Entrenamiento 2022-23, validación 2024, prueba 2025-26.
+  Selección hacia adelante eligió 15 factores (+0.059 bits en validación) → prueba −0.051 bits,
+  top3 3.1%, p=0.94. Los 9 factores consistentes en 2022-23 y 2024 juntos: −0.043 bits en prueba.
+  Cada factor solo en prueba: entre −0.048 y +0.011 bits. Varios cambian de signo entre periodos.
 
 ## Notas técnicas
 - Instalar dependencias: `pip install --break-system-packages -r requirements.txt`. Si
