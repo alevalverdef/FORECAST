@@ -133,6 +133,12 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   frecuencia global 10/188 (5.3%); LN×octubre×último domingo 9/189 (4.8%, pero solo 5 sorteos
   previos: 26, 29, 77, 83, 84, una vez cada uno); LN×mes 8/189; LN×último domingo 8/189;
   LN×semana 5/189; LN×n.º sorteo 4/189. Azar ≈5.7/189. Todo dentro del ruido.
+- Pedido del usuario: "días análogos" con muchos factores iterados. Construido `loteria/analogos.py`:
+  cada sorteo pasado vota por su número con peso exp(Σ w·coincidencias) en 12 factores (tipo,
+  mes, semana del mes, último del mes, n.º de sorteo, día, quincena, decena/alto del anterior,
+  decena del anterior del mismo tipo, decenas ya salidas en el mes, año); pesos aprendidos por
+  máxima verosimilitud en 2021-24. Prueba 2025-26 (223 sorteos): −0.014 bits, top3 2.7%
+  (azar 3%), p=0.86; solo LN: 3.3%. No supera al azar. Para 25/10 daba 09, 67, 73.
 
 ## Notas técnicas
 - Instalar dependencias: `pip install --break-system-packages -r requirements.txt`. Si
