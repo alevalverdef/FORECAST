@@ -132,6 +132,12 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   domingo de un mes con 4 domingos" (40 sorteos; 44 nunca salió ahí). Validación LN 2023-26:
   cluster 7/188 vs frecuencia global 10/188 (azar ≈5.6): sin diferencia real. Claude dijo que
   le daría un solo top 3 oficial por sorteo, sin mezclar resultados de experimentos.
+  Análisis dentro del cluster (40): decena/unidad ya salidas en el mes = lo esperado (26 vs 24.3;
+  23 vs 23.5; el 65% "crudo" era porque a fin de mes ya hubo más sorteos). Misma decena que el
+  sorteo anterior: 0/40 (esperado 4, p=0.03; 0/20 en cada mitad; control 5 domingos 1/21) → único
+  patrón aplicable: excluir la decena del anterior (20 → 20-29). Misma unidad que el anterior
+  7/40 (p=0.11, no). Últimos domingos de octubre 2021-25: 26, 29, 84, 83, 77 (sin repetición).
+  Diferencias vs anterior: ninguna se repite más de 2 veces (normal). Top 3 se mantiene 09, 67, 11.
   Son los más salidos en TODA la historia (escenario que el usuario llama "la estupidez más grande").
   Él quiere "el más salido en el contexto idéntico". Validado solo en domingos LN 2023-26 (≈189):
   frecuencia global 10/188 (5.3%); LN×octubre×último domingo 9/189 (4.8%, pero solo 5 sorteos
