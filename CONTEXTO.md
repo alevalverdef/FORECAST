@@ -161,6 +161,15 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   top3 3.1%, p=0.94. Los 9 factores consistentes en 2022-23 y 2024 juntos: −0.043 bits en prueba.
   Cada factor solo en prueba: entre −0.048 y +0.011 bits. Varios cambian de signo entre periodos.
 
+## MÉTODO OFICIAL DESDE 25/10 (definido por el usuario)
+- `loteria/patron_dia.py`: 1) cluster de días similares al sorteo (mismo tipo, mismo día de la
+  semana, misma posición en el mes / último + cantidad de ese día en el mes); 2) puntaje = veces en
+  el cluster; 3) filtros que se sostienen en ambas mitades del cluster (hoy: no repetir la decena
+  del anterior); 4) la frecuencia general (p. ej. 44) SOLO como ajuste/desempate, nunca como base.
+  El usuario NO quiere que se elija por "aciertos históricos"; quiere el patrón del día. Top 3-10 a
+  criterio de Claude.
+- 25/10 (cluster 40): 09, 67, 11, 73, 35.
+
 ## Notas técnicas
 - Instalar dependencias: `pip install --break-system-packages -r requirements.txt`. Si
   falla por "hash mismatch" (descarga cortada de xgboost), instalar por partes y
