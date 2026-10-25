@@ -128,6 +128,11 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   por las 9 reglas). Chances → Repetición por rezago; Lotería Nacional → Frecuencia histórica a=20
   (la repetición NO funciona en Lotería Nacional: −0.012 bits). NUEVA REGLA OFICIAL.
 - Pronóstico Lotería Nacional domingo 25/10/2026 (corregido con la nueva regla): 44, 73, 60.
+  Son los más salidos en TODA la historia (escenario que el usuario llama "la estupidez más grande").
+  Él quiere "el más salido en el contexto idéntico". Validado solo en domingos LN 2023-26 (≈189):
+  frecuencia global 10/188 (5.3%); LN×octubre×último domingo 9/189 (4.8%, pero solo 5 sorteos
+  previos: 26, 29, 77, 83, 84, una vez cada uno); LN×mes 8/189; LN×último domingo 8/189;
+  LN×semana 5/189; LN×n.º sorteo 4/189. Azar ≈5.7/189. Todo dentro del ruido.
 
 ## Notas técnicas
 - Instalar dependencias: `pip install --break-system-packages -r requirements.txt`. Si
