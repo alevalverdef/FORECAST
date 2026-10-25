@@ -122,7 +122,12 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
 - 23/10: salió **20** (1.er lugar). Marcador 1.er lugar: 0 de 5. El usuario dice que el sistema está
   "en un loop" con 47, 57, 75, 85 y que eso son promedios: es la regla de repetición de recientes
   (diseño del modelo), no promedios; su ventaja en backtest NO es significativa (p=0.15).
-- Pronóstico Lotería Nacional domingo 25/10/2026 (misma regla): 75, 20, 84.
+- Idea del usuario: "qué modelo aplicar según el día". Probado (`loteria/seleccion_por_contexto.py`,
+  16 modelos, 9 reglas de selección, 216 sorteos de prueba): la mejor regla es escoger el modelo
+  con mejor historial en el MISMO TIPO DE SORTEO: +0.0195 bits, top 3 5.4%, p=0.032 (sin corregir
+  por las 9 reglas). Chances → Repetición por rezago; Lotería Nacional → Frecuencia histórica a=20
+  (la repetición NO funciona en Lotería Nacional: −0.012 bits). NUEVA REGLA OFICIAL.
+- Pronóstico Lotería Nacional domingo 25/10/2026 (corregido con la nueva regla): ver bitácora.
 
 ## Notas técnicas
 - Instalar dependencias: `pip install --break-system-packages -r requirements.txt`. Si
