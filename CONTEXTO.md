@@ -139,6 +139,9 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   decena del anterior del mismo tipo, decenas ya salidas en el mes, año); pesos aprendidos por
   máxima verosimilitud en 2021-24. Prueba 2025-26 (223 sorteos): −0.014 bits, top3 2.7%
   (azar 3%), p=0.86; solo LN: 3.3%. No supera al azar. Para 25/10 daba 09, 67, 73.
+  Ajustado para "haber predicho" 2021-24: 5.4% top3 en esos mismos sorteos vs 2.7% en 2025-26.
+  Reajustando pesos cada 10 sorteos con resultados reales: 3.6% top3, −0.012 bits. Puesto que dio
+  al real en los últimos 6 (ajustado justo antes): 20, 83, 64, 98, 61, 46.
 
 ## Notas técnicas
 - Instalar dependencias: `pip install --break-system-packages -r requirements.txt`. Si
