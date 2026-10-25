@@ -31,8 +31,9 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   "28 Aug, 2026"), validadas contra el día de la semana: sin errores.
 - Sorteos en días especiales (lunes 02/02/2026, algunos sábados, un miércoles): se conservan.
 - Hueco: no hay Chances entre 11/04/2025 y 29/08/2025.
-- Último resultado registrado: **martes 20/10/2026 → 85** (Chances, serie 954). 726 sorteos.
-  (La JPS publica 1.º, 2.º y 3.er lugar; el histórico solo tiene el 1.º. 20/10: 85, 38, 64.)
+- Último resultado registrado: **viernes 23/10/2026 → 20** (Chances, serie 158). 727 sorteos.
+  (La JPS publica 1.º, 2.º y 3.er lugar; el histórico solo tiene el 1.º. 20/10: 85, 38, 64.
+  23/10: 20, 63, 61 — el 61 del pronóstico salió en 3.er lugar.)
 
 ## Hallazgos (ya comunicados al usuario)
 - Pruebas de aleatoriedad (`analizar`): ninguna variable (día, mes, quincena, año, tipo de
@@ -118,6 +119,10 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
 - Para el 23/10, el modelo que combina TODOS los contextos (Correlaciones del barrido completo)
   da 73, 33, 75 (2.96%, 2.79%, 2.56%); su historial en 216 sorteos: top 3 3.7%, top 10 7.4%.
   Se le mostró al usuario como "la respuesta por contextos"; el oficial sigue siendo 57, 85, 61.
+- 23/10: salió **20** (1.er lugar). Marcador 1.er lugar: 0 de 5. El usuario dice que el sistema está
+  "en un loop" con 47, 57, 75, 85 y que eso son promedios: es la regla de repetición de recientes
+  (diseño del modelo), no promedios; su ventaja en backtest NO es significativa (p=0.15).
+- Pronóstico Lotería Nacional domingo 25/10/2026 (misma regla): 75, 20, 84.
 
 ## Notas técnicas
 - Instalar dependencias: `pip install --break-system-packages -r requirements.txt`. Si
