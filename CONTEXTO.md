@@ -31,7 +31,7 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   "28 Aug, 2026"), validadas contra el día de la semana: sin errores.
 - Sorteos en días especiales (lunes 02/02/2026, algunos sábados, un miércoles): se conservan.
 - Hueco: no hay Chances entre 11/04/2025 y 29/08/2025.
-- Último resultado registrado: **viernes 30/10/2026 → 23** (Chances, serie 515). 730 sorteos.
+- Último resultado registrado: **domingo 1/11/2026 → 27** (Lotería Nacional, serie 130). 731 sorteos.
   (La JPS publica 1.º, 2.º y 3.er lugar; el histórico solo tiene el 1.º. 20/10: 85, 38, 64.
   23/10: 20, 63, 61 — el 61 del pronóstico salió en 3.er lugar.)
 
@@ -175,7 +175,9 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
 - Se empezó a guardar 1.º/2.º/3.er lugar con series en `data/premios_2y3.csv` (desde 20/10).
 - 30/10 Chances (último viernes de un mes con 5 viernes; cluster 18): 30, 94, 34, 44, 31 → salió
   **23** (2.º 41, 3.º 88). El 23 no estaba en el cluster: puesto 80. Marcador 1.er lugar: 0 de 8.
-- 1/11 Lotería Nacional (primer domingo; cluster 58): 60, 87, 07, 09, 26.
+- 1/11 Lotería Nacional (primer domingo; cluster 58): 60, 87, 07, 09, 26 → salió **27** (2.º 49,
+  3.º 77). El 27 estaba 1 vez en el cluster: puesto 22. Marcador 1.er lugar: 0 de 9.
+- 3/11 Chances (primer martes; cluster 48): 03, 58, 55, 89, 33.
 
 ## Notas técnicas
 - Instalar dependencias: `pip install --break-system-packages -r requirements.txt`. Si
