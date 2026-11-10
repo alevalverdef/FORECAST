@@ -186,6 +186,10 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
 - 3/11 Chances (primer martes; cluster 48): 03, 58, 55 → salió **48** (2.º 81, 3.º 76). Marcador: 0 de 10.
 - 6/11 Chances: 18, 73, 07 → salió **96** (2.º 69, 3.º 32). Marcador: 0 de 11.
 - 8/11 Lotería Nacional: 46, 31, 20 → salió **26** (2.º 74, 3.º 55). Marcador: 0 de 12.
+- Post-mortem del 26 (8/11) con 10 variantes de "días similares" (posición ±1, quincena, mismo mes,
+  mes ±1, día del mes ±3, último año, 2 años, cualquier sorteo...): ninguna lo ponía en el top 3
+  (mejor: puesto 5 con "mismo mes ±1"). Validación de cada variante en 191 domingos 2023-26:
+  entre 5 y 9 aciertos de top 3 (azar ≈5.7); "mismo mes ±1" es la peor (5/191).
 - 10/11 Chances (cluster 49): 31, 99, 91.
 
 ## Notas técnicas
