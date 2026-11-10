@@ -190,6 +190,11 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   mes ±1, día del mes ±3, último año, 2 años, cualquier sorteo...): ninguna lo ponía en el top 3
   (mejor: puesto 5 con "mismo mes ±1"). Validación de cada variante en 191 domingos 2023-26:
   entre 5 y 9 aciertos de top 3 (azar ≈5.7); "mismo mes ±1" es la peor (5/191).
+- Factores "fuera de la caja" (10/11): fase lunar, cercanía a feriados, días de pago, temporada,
+  semana par/impar → nada (p 0.20-0.92). Aritmética de fecha: resultado = día + mes salió
+  16/734 (2.18%, p=0.004 sin corregir; 2.75% en 2021-23, 1.62% en 2024-26; vecinos día+mes±k
+  normales). Es el hallazgo más fuerte, pero probable artefacto de probar cientos de reglas.
+  Se le ofreció al usuario agregarlo como ajuste; para 10/11 sería el 21. No aplicado sin orden.
 - 10/11 Chances (cluster 49): 31, 99, 91.
 
 ## Notas técnicas
