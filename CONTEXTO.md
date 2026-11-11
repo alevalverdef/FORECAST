@@ -199,6 +199,11 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   Puestos 1 y 2 siguen saliendo del patrón del día.
 - 10/11 Chances: 31, 99, 91 → salió **27** (2.º 69, 3.º 09). Marcador: 0 de 13.
 - 13/11 Chances (cluster 54; 3.º = día+mes): 05, 44, 24.
+- Prueba de regresión del método oficial (`python loteria/backtest_oficial.py`): 24 variantes
+  (cluster actual / misma posición / solo tipo+día; peso frecuencia general 0-3; con o sin día+mes),
+  calibración 2023-24 (279 sorteos), prueba 2025-26 (231). Oficial: 8 y 9 aciertos top 3 (azar 8.4
+  y 6.9; p=0.26). Mejor en calibración (solo tipo, peso 3, día+mes): 13 → 9 en prueba, igual que el
+  oficial. Día+mes mejora a casi todas las variantes en 2025-26. Decisión: NO recalibrar.
 
 ## Notas técnicas
 - Instalar dependencias: `pip install --break-system-packages -r requirements.txt`. Si
