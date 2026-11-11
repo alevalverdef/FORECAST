@@ -194,7 +194,7 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   semana par/impar → nada (p 0.20-0.92). Aritmética de fecha: resultado = día + mes salió
   16/734 (2.18%, p=0.004 sin corregir; 2.75% en 2021-23, 1.62% en 2024-26; vecinos día+mes±k
   normales). Es el hallazgo más fuerte, pero probable artefacto de probar cientos de reglas.
-  Claude recomendó y el usuario aceptó: desde el 13/11 el 3.er lugar del top 3 es SIEMPRE el
+  El usuario pidió la recomendación de Claude, que decidió: desde el 13/11 el 3.er lugar del top 3 es SIEMPRE el
   número día + mes (validación prospectiva: si la regla es real, debe acertar ~2% en adelante).
   Puestos 1 y 2 siguen saliendo del patrón del día.
 - 10/11 Chances (cluster 49): 31, 99, 91.
