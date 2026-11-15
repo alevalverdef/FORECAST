@@ -20,7 +20,7 @@ CTX = {"mismo tipo de sorteo": sor, "mismo día y posición en el mes": dow * 10
 INI = 300
 
 
-def bateria(x):
+def bateria(x, top=3, detalle=None):
     """Aciertos de top 3 de cada regla en los sorteos INI..N (cada pronóstico usa solo el pasado)."""
     h = {}
     cnt = np.zeros(100); last = np.full(100, -1); rec = np.zeros(100)
@@ -29,24 +29,26 @@ def bateria(x):
     rng = np.random.default_rng(0)
     def hit(nombre, picks, y):
         h[nombre] = h.get(nombre, 0) + (y in picks)
+        if detalle is not None:
+            detalle.setdefault(nombre, []).append(bool(y in picks))
     for t in range(N):
         y = x[t]
         if t >= INI:
             ruido = rng.random(100) * 1e-6
-            hit("más salidos (historia)", np.argsort(-(cnt + ruido))[:3], y)
-            hit("menos salidos (historia)", np.argsort(cnt + ruido)[:3], y)
-            hit("más salidos (últimos ~50)", np.argsort(-(rec + ruido))[:3], y)
-            hit("más atrasados", np.argsort(last + ruido)[:3], y)
-            hit("recién salidos", np.argsort(-(last + ruido))[:3], y)
+            hit("más salidos (historia)", np.argsort(-(cnt + ruido))[:top], y)
+            hit("menos salidos (historia)", np.argsort(cnt + ruido)[:top], y)
+            hit("más salidos (últimos ~50)", np.argsort(-(rec + ruido))[:top], y)
+            hit("más atrasados", np.argsort(last + ruido)[:top], y)
+            hit("recién salidos", np.argsort(-(last + ruido))[:top], y)
             hit("repetir hace 1, 2 y 3", x[t - 3:t], y)
             hit("repetir hace 3, 6 y 9", x[[t - 3, t - 6, t - 9]], y)
-            hit("sucesores del anterior (Markov)", np.argsort(-(trans[x[t - 1]] + cnt * 1e-3 + ruido))[:3], y)
+            hit("sucesores del anterior (Markov)", np.argsort(-(trans[x[t - 1]] + cnt * 1e-3 + ruido))[:top], y)
             hit("vecinos del anterior (±1, espejo)", [(x[t-1]+1) % 100, (x[t-1]-1) % 100, (x[t-1] % 10) * 10 + x[t-1] // 10], y)
             hit("aritmética de fecha", [(dia[t] + mes[t]) % 100, dia[t], (dia[t] * mes[t]) % 100], y)
             for k, v in CTX.items():
                 c = ctxc[k].get(v[t])
                 sc = (c if c is not None else np.zeros(100)) + cnt * 1e-3 + ruido
-                hit("más salidos en " + k, np.argsort(-sc)[:3], y)
+                hit("más salidos en " + k, np.argsort(-sc)[:top], y)
         cnt[y] += 1; last[y] = t; rec *= 0.986; rec[y] += 1
         if t: trans[x[t - 1], y] += 1
         for k, v in CTX.items():

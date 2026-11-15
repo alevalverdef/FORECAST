@@ -216,6 +216,13 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
 - Se intentó consultar jps.go.cr para bajar historia de 2.º/3.er lugar: bloqueado en esta sesión.
   Única vía nueva de datos: que el usuario aporte esa historia (o las "Listas de Premios").
 
+## RETROSPECTIVA FIJA (pedida por el usuario 15/11) — `python loteria/retro.py 14`
+- Tras CADA resultado: correr la retrospectiva ("¿qué reglas tenían el número real en su top 10?")
+  y mostrársela al usuario junto con el top 3. Últimos 14 (13/10-13/11): 5 sorteos sin ninguna
+  regla; las que más "explicaron" (menos salidos, atrasados, vecinos: 3 de 14 c/u) habían acertado
+  1, 1 y 0 en los 14 anteriores. Estrategia "usar la regla que mejor explicó los últimos 14" probada
+  en 30 bloques de la historia: 9.3% de acierto en top 10 (azar 10%). No se recalibró.
+
 ## Notas técnicas
 - Instalar dependencias: `pip install --break-system-packages -r requirements.txt`. Si
   falla por "hash mismatch" (descarga cortada de xgboost), instalar por partes y
