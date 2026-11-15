@@ -205,6 +205,17 @@ como caso el número (00–99) de la JPS de Costa Rica: Lotería Nacional (domin
   y 6.9; p=0.26). Mejor en calibración (solo tipo, peso 3, día+mes): 13 → 9 en prueba, igual que el
   oficial. Día+mes mejora a casi todas las variantes en 2025-26. Decisión: NO recalibrar.
 
+## PRUEBA GLOBAL DE PERMUTACIÓN (15/11) — `python loteria/prueba_global.py 300`
+- 15 reglas de pronóstico (frecuencia, fríos, atrasados, repeticiones, Markov, vecinos, aritmética
+  de fecha, 5 contextos) aplicadas a la serie real y a 300 copias barajadas (436 sorteos c/u).
+  Mejor regla real: 19 aciertos top 3; en barajadas la mejor promedia 20.3 (78% igualan o superan).
+  Suma de todas: 201 real vs 201.7 barajado. Autocorrelación máx: 0.072 vs 0.071. Conclusión: la
+  serie real es indistinguible de una barajada → no queda patrón de orden/fecha/contexto por hallar.
+- El cluster del método oficial (mismo día y posición en el mes) fue la PEOR regla: 8 aciertos
+  (barajado 14.3). Se informó al usuario; el método no se cambia sin su orden.
+- Se intentó consultar jps.go.cr para bajar historia de 2.º/3.er lugar: bloqueado en esta sesión.
+  Única vía nueva de datos: que el usuario aporte esa historia (o las "Listas de Premios").
+
 ## Notas técnicas
 - Instalar dependencias: `pip install --break-system-packages -r requirements.txt`. Si
   falla por "hash mismatch" (descarga cortada de xgboost), instalar por partes y
